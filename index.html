@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Favicon: Pencil writing on an open book -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn-icons-png.flaticon.com/32/2921/2921222.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn-icons-png.flaticon.com/16/2921/2921222.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
+    
+    <meta name="theme-color" content="#2a5298">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
     <title>Grade 7 Test System - Mobile Friendly</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -42,12 +49,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        h2, h3 {
-            color: #2a5298;
-            text-align: center;
-            margin-bottom: 16px;
-            font-size: 1.5rem;
-        }
+        h2, h3 { color: #2a5298; text-align: center; margin-bottom: 16px; font-size: 1.5rem; }
 
         .dashboard-stats {
             display: grid;
@@ -64,25 +66,10 @@
             border: 1px solid #e0e0e0;
         }
 
-        .stat-card h4 {
-            margin-bottom: 6px;
-            font-size: 0.95rem;
-            color: #555;
-        }
+        .stat-card h4 { margin-bottom: 6px; font-size: 0.95rem; color: #555; }
+        .stat-card .value { font-size: 1.5rem; font-weight: 600; color: #2a5298; }
 
-        .stat-card .value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2a5298;
-        }
-
-        .clock, #timeLeft {
-            font-size: 1.2rem;
-            color: #e74c3c;
-            text-align: center;
-            margin: 12px 0;
-            font-weight: 600;
-        }
+        .clock, #timeLeft { font-size: 1.2rem; color: #e74c3c; text-align: center; margin: 12px 0; font-weight: 600; }
 
         input, select, button {
             margin: 12px 0;
@@ -103,10 +90,7 @@
             min-height: 52px;
         }
 
-        button:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+        button:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 
         .nav-buttons {
             display: flex;
@@ -115,9 +99,7 @@
             margin-top: 20px;
         }
 
-        .nav-buttons button {
-            flex: 1;
-        }
+        .nav-buttons button { flex: 1; }
 
         .hidden { display: none; }
 
@@ -139,23 +121,11 @@
             border-radius: 8px;
         }
 
-        .option-row:hover,
-        .option-row:active {
-            background: #e8f0fe;
-        }
+        .option-row:hover, .option-row:active { background: #e8f0fe; }
 
-        .option-radio {
-            width: 22px;
-            height: 22px;
-            margin-right: 14px;
-            flex-shrink: 0;
-        }
+        .option-radio { width: 22px; height: 22px; margin-right: 14px; flex-shrink: 0; }
 
-        label {
-            flex: 1;
-            font-size: 1rem;
-            word-break: break-word;
-        }
+        label { flex: 1; font-size: 1rem; word-break: break-word; }
 
         .progress-container {
             height: 10px;
@@ -172,36 +142,68 @@
             transition: width 0.4s ease;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.95rem;
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+
+        th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; }
+
+        th { background: #2a5298; color: white; }
+
+        /* Leaderboard styles */
+        #leaderboardSection { padding: 20px; }
+        .leaderboard-title { margin-bottom: 20px; }
+        .your-rank {
+            text-align: center;
+            font-size: 1.1rem;
+            margin: 12px 0 20px;
+            padding: 12px;
+            background: #e8f0fe;
+            border-radius: 10px;
+            color: #1e3c72;
         }
 
-        th, td {
-            border: 1px solid #e0e0e0;
-            padding: 10px;
-            text-align: left;
+        .filter-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        th {
-            background: #2a5298;
-            color: white;
+        .filter-row select {
+            padding: 12px;
         }
+
+        #leaderboardTable th, #leaderboardTable td { text-align: center; padding: 12px; }
+        #leaderboardTable .top-3 { font-weight: 600; background: #fffacd; }
 
         @media (min-width: 600px) {
+            .filter-row { flex-direction: row; justify-content: center; gap: 20px; }
+            .filter-row select { width: auto; min-width: 180px; }
             body { padding: 20px; }
             .container { padding: 32px; }
-            .nav-buttons { flex-direction: row; justify-content: center; }
-            .question { font-size: 1.1rem; }
-            h2 { font-size: 1.8rem; }
-            .stat-card .value { font-size: 1.8rem; }
         }
 
-        @media (min-width: 900px) {
-            .container { max-width: 1100px; }
-            .dashboard-stats { grid-template-columns: repeat(5, 1fr); }
+        @media (max-width: 600px) {
+            #leaderboardTable thead { display: none; }
+            #leaderboardTable tr {
+                display: block;
+                margin-bottom: 16px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+            #leaderboardTable td {
+                display: block;
+                text-align: right;
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+            #leaderboardTable td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 12px;
+                font-weight: bold;
+                color: #2a5298;
+            }
         }
     </style>
 </head>
@@ -225,28 +227,15 @@
             <h2>Welcome, <span id="studentName"></span></h2>
             <div class="clock" id="liveClock">Loading time...</div>
             <div class="dashboard-stats">
-                <div class="stat-card">
-                    <h4>Total Tests Taken</h4>
-                    <div class="value" id="totalTests">0</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Total Correct Answers</h4>
-                    <div class="value" id="totalScore">0</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Total Reward Earned</h4>
-                    <div class="value" id="totalReward">K0.00</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Average Score</h4>
-                    <div class="value" id="avgScore">0%</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Last Test Date</h4>
-                    <div class="value" id="lastTestDate">None</div>
-                </div>
+                <div class="stat-card"><h4>Total Tests Taken</h4><div class="value" id="totalTests">0</div></div>
+                <div class="stat-card"><h4>Total Correct Answers</h4><div class="value" id="totalScore">0</div></div>
+                <div class="stat-card"><h4>Total Reward Earned</h4><div class="value" id="totalReward">K0.00</div></div>
+                <div class="stat-card"><h4>Average Score</h4><div class="value" id="avgScore">0%</div></div>
+                <div class="stat-card"><h4>Last Test Date</h4><div class="value" id="lastTestDate">None</div></div>
             </div>
+            <div id="yourRankMini" class="your-rank" style="margin:16px 0; display:none;"></div>
             <button onclick="showSection('testSection')">Start New Test</button>
+            <button onclick="showLeaderboard()">View Global Leaderboard</button>
             <button onclick="logout()" style="background:#e74c3c; margin-top:12px;">Logout</button>
         </div>
 
@@ -289,6 +278,46 @@
             <button onclick="showSection('studentDashboard')">Back to Dashboard</button>
         </div>
 
+        <!-- Leaderboard -->
+        <div id="leaderboardSection" class="section hidden">
+            <h2 class="leaderboard-title">Global Leaderboard</h2>
+            
+            <div class="filter-row">
+                <select id="leaderboardSubjectFilter" onchange="renderLeaderboard()">
+                    <option value="all">All Subjects</option>
+                    <option value="science">Science</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="english">English</option>
+                </select>
+                <select id="leaderboardTimeFilter" onchange="renderLeaderboard()">
+                    <option value="all">All Time</option>
+                    <option value="7days">Last 7 Days</option>
+                    <option value="30days">Last 30 Days</option>
+                    <option value="thisMonth">This Month</option>
+                    <option value="thisYear">This Year</option>
+                </select>
+            </div>
+
+            <div id="yourRankDisplay" class="your-rank"></div>
+
+            <div style="overflow-x:auto;">
+                <table id="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Total Reward</th>
+                            <th>Avg Score</th>
+                            <th>Tests</th>
+                            <th>Last Test</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
+            <button onclick="showSection('studentDashboard')" style="margin-top:20px; width:100%;">Back to Dashboard</button>
+        </div>
+
         <!-- Teacher Dashboard -->
         <div id="teacherDashboard" class="section hidden">
             <h2>Teacher Dashboard</h2>
@@ -324,8 +353,12 @@
         // GLOBAL VARIABLES
         // ────────────────────────────────────────────────
         let students = JSON.parse(localStorage.getItem('students')) || [
-            { username: 'test', password: 'pass' }
+            { username: 'test',   password: 'pass',   role: 'student' },
+            { username: 'shimba', password: '1234',   role: 'student' },
+            { username: 'john',   password: '1234',   role: 'student' },
+            { username: 'zanji',  password: '1234',   role: 'student' }
         ];
+
         let testHistory = JSON.parse(localStorage.getItem('testHistory')) || [];
         let currentQuestions = [];
         let userAnswers = {};
@@ -357,6 +390,9 @@
             if (id === 'teacherDashboard') {
                 populateTeacherDashboard();
             }
+            if (id === 'leaderboardSection') {
+                renderLeaderboard();
+            }
         }
 
         function updateStudentDashboard() {
@@ -374,6 +410,17 @@
             document.getElementById('totalReward').textContent = `K${totalReward.toFixed(2)}`;
             document.getElementById('avgScore').textContent = `${avgScore}%`;
             document.getElementById('lastTestDate').textContent = lastTest;
+
+            // Mini your rank on dashboard (all time)
+            const allLeaderboard = calculateLeaderboard('all', 'all');
+            const yourIndex = allLeaderboard.findIndex(e => e.username === currentUser.username);
+            const rankMini = document.getElementById('yourRankMini');
+            if (yourIndex !== -1 && yourIndex < 50) {
+                rankMini.innerHTML = `Your global rank: <strong>#${yourIndex + 1}</strong> (K${allLeaderboard[yourIndex].totalReward.toFixed(2)})`;
+                rankMini.style.display = 'block';
+            } else {
+                rankMini.style.display = 'none';
+            }
         }
 
         function login() {
@@ -392,7 +439,7 @@
                 currentUser = { ...student, role: 'student' };
                 showSection('studentDashboard');
             } else {
-                alert("Invalid credentials.");
+                alert("Invalid credentials or wrong role selected.");
             }
         }
 
@@ -454,7 +501,6 @@
         function saveAnswer(idx, val) {
             userAnswers[idx] = val;
             updateProgressBar();
-            // Visual feedback
             document.querySelectorAll(`input[name="q${idx}"]`).forEach(radio => {
                 radio.parentElement.style.background = radio.checked ? '#e8f0fe' : '';
             });
@@ -467,17 +513,9 @@
             document.getElementById('progressBar').style.width = percentage + '%';
         }
 
-        function nextPage() {
-            currentPage++;
-            displayPage();
-        }
+        function nextPage() { currentPage++; displayPage(); }
 
-        function previousPage() {
-            if (currentPage > 0) {
-                currentPage--;
-                displayPage();
-            }
-        }
+        function previousPage() { if (currentPage > 0) { currentPage--; displayPage(); } }
 
         function startTimer() {
             timer = setInterval(() => {
@@ -529,6 +567,11 @@
                 fb += `<p>Q${i+1}: ${correct ? '<span style="color:#27ae60">Correct</span>' : '<span style="color:#e74c3c">Wrong</span>'} - ${q.explanation}</p>`;
             });
             document.getElementById('feedbackContainer').innerHTML = fb;
+
+            // Auto-show leaderboard after test (with delay)
+            if (currentUser.role === 'student') {
+                setTimeout(showLeaderboard, 1800);
+            }
         }
 
         function populateTeacherDashboard() {
@@ -555,7 +598,7 @@
             const p = document.getElementById('newStudentPassword').value;
             if (!u || !p) return alert("Enter username and password");
             if (students.some(s => s.username === u)) return alert("Username already exists");
-            students.push({ username: u, password: p });
+            students.push({ username: u, password: p, role: 'student' });
             localStorage.setItem('students', JSON.stringify(students));
             alert(`Student ${u} created!`);
         }
@@ -565,7 +608,126 @@
             location.reload();
         }
 
-        // Questions (only science shown – add math & english as needed)
+        // ── Leaderboard Logic ──────────────────────────────────────
+
+        function getFilteredHistory(subjectFilter = 'all', timeFilter = 'all') {
+            let filtered = testHistory;
+
+            if (subjectFilter !== 'all') {
+                filtered = filtered.filter(t => t.subject === subjectFilter);
+            }
+
+            const now = new Date();
+            if (timeFilter !== 'all') {
+                let startDate;
+                if (timeFilter === '7days') {
+                    startDate = new Date(now);
+                    startDate.setDate(now.getDate() - 7);
+                } else if (timeFilter === '30days') {
+                    startDate = new Date(now);
+                    startDate.setDate(now.getDate() - 30);
+                } else if (timeFilter === 'thisMonth') {
+                    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                } else if (timeFilter === 'thisYear') {
+                    startDate = new Date(now.getFullYear(), 0, 1);
+                }
+
+                filtered = filtered.filter(t => {
+                    const [d, m, y] = t.date.split('/');
+                    const testDate = new Date(y, m-1, d);
+                    return testDate >= startDate;
+                });
+            }
+
+            return filtered;
+        }
+
+        function calculateLeaderboard(subjectFilter = 'all', timeFilter = 'all') {
+            const filteredHistory = getFilteredHistory(subjectFilter, timeFilter);
+            const statsByStudent = {};
+
+            filteredHistory.forEach(entry => {
+                const s = entry.student;
+                if (!statsByStudent[s]) {
+                    statsByStudent[s] = {
+                        username: s,
+                        totalReward: 0,
+                        totalCorrect: 0,
+                        totalQuestions: 0,
+                        testsTaken: 0,
+                        lastTestDate: 'None'
+                    };
+                }
+
+                statsByStudent[s].totalReward += entry.reward;
+                statsByStudent[s].totalCorrect += entry.score;
+                statsByStudent[s].totalQuestions += entry.total;
+                statsByStudent[s].testsTaken++;
+                statsByStudent[s].lastTestDate = entry.date;
+            });
+
+            let leaderboard = Object.values(statsByStudent).map(s => ({
+                ...s,
+                avgScore: s.totalQuestions > 0 ? Math.round((s.totalCorrect / s.totalQuestions) * 100) : 0
+            }));
+
+            leaderboard.sort((a, b) => {
+                if (b.totalReward !== a.totalReward) return b.totalReward - a.totalReward;
+                if (b.avgScore !== a.avgScore) return b.avgScore - a.avgScore;
+                return b.testsTaken - a.testsTaken;
+            });
+
+            return leaderboard;
+        }
+
+        function renderLeaderboard() {
+            const subjectFilter = document.getElementById('leaderboardSubjectFilter')?.value || 'all';
+            const timeFilter = document.getElementById('leaderboardTimeFilter')?.value || 'all';
+
+            const leaderboard = calculateLeaderboard(subjectFilter, timeFilter);
+            const tbody = document.getElementById('leaderboardBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            const top10 = leaderboard.slice(0, 10);
+
+            top10.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                if (index < 3) row.classList.add('top-3');
+
+                row.innerHTML = `
+                    <td data-label="Rank">${index + 1}</td>
+                    <td data-label="Username">${entry.username}</td>
+                    <td data-label="Total Reward">K${entry.totalReward.toFixed(2)}</td>
+                    <td data-label="Avg Score">${entry.avgScore}%</td>
+                    <td data-label="Tests">${entry.testsTaken}</td>
+                    <td data-label="Last Test">${entry.lastTestDate}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Your rank with current filters
+            if (currentUser && currentUser.role === 'student') {
+                const yourIndex = leaderboard.findIndex(e => e.username === currentUser.username);
+                const rankDisplay = document.getElementById('yourRankDisplay');
+
+                if (yourIndex !== -1) {
+                    const yourEntry = leaderboard[yourIndex];
+                    rankDisplay.innerHTML = `You are <strong>#${yourIndex + 1}</strong> in this view with <strong>K${yourEntry.totalReward.toFixed(2)}</strong>`;
+                } else {
+                    rankDisplay.innerHTML = "No tests match the current filters — try changing filters or take more tests!";
+                }
+            } else {
+                document.getElementById('yourRankDisplay').innerHTML = '';
+            }
+        }
+
+        function showLeaderboard() {
+            renderLeaderboard();
+            showSection('leaderboardSection');
+        }
+        
         const questions = [
 
 { id: 501, subject: "science", text: "Which nutrient is mainly needed for energy and is abundant in nshima?", options: ["A. Proteins", "B. Carbohydrates", "C. Vitamins", "D. Minerals"], answer: "B", explanation: "Carbohydrates (from maize meal) provide quick energy." },
