@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- Favicon: Pencil writing on an open book -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdn-icons-png.flaticon.com/32/2921/2921222.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://cdn-icons-png.flaticon.com/16/2921/2921222.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
     
     <meta name="theme-color" content="#2a5298">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-    <title>Grade 7 Test System - Mobile Friendly</title>
+    <title>Grade 7 Test System</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -29,11 +28,10 @@
             align-items: flex-start;
             padding: 12px;
             color: #333;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(255,255,255,0.97);
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             padding: 20px;
@@ -78,7 +76,6 @@
             border: 2px solid #ccc;
             border-radius: 10px;
             font-size: 1rem;
-            transition: all 0.2s;
         }
 
         button {
@@ -90,124 +87,57 @@
             min-height: 52px;
         }
 
-        button:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .nav-buttons button { flex: 1; }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
 
         .hidden { display: none; }
 
-        .question {
-            margin-bottom: 28px;
-            padding: 18px;
-            background: #f9f9f9;
-            border-radius: 12px;
-            font-size: 1.05rem;
-        }
+        .question { margin-bottom: 28px; padding: 18px; background: #f9f9f9; border-radius: 12px; font-size: 1.05rem; }
 
-        .option-row {
-            display: flex;
-            align-items: center;
-            margin: 14px 0;
-            cursor: pointer;
-            min-height: 48px;
-            padding: 8px;
-            border-radius: 8px;
-        }
-
+        .option-row { display: flex; align-items: center; margin: 14px 0; cursor: pointer; min-height: 48px; padding: 8px; border-radius: 8px; }
         .option-row:hover, .option-row:active { background: #e8f0fe; }
 
-        .option-radio { width: 22px; height: 22px; margin-right: 14px; flex-shrink: 0; }
+        .option-radio { width: 22px; height: 22px; margin-right: 14px; }
 
-        label { flex: 1; font-size: 1rem; word-break: break-word; }
+        label { flex: 1; font-size: 1rem; }
 
-        .progress-container {
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 12px 0;
+        .progress-container { height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; margin: 12px 0; }
+        .progress-bar { height: 100%; background: #27ae60; width: 0%; transition: width 0.4s ease; }
+
+        .loading-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex;
+            align-items: center; justify-content: center; z-index: 9999; color: white; font-size: 1.3rem;
         }
 
-        .progress-bar {
-            height: 100%;
-            background: #27ae60;
-            width: 0;
-            transition: width 0.4s ease;
-        }
+        .error-message { color: #e74c3c; text-align: center; margin: 10px 0; font-size: 0.95rem; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
-
-        th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; }
-
-        th { background: #2a5298; color: white; }
-
-        /* Leaderboard styles */
+        /* Leaderboard */
         #leaderboardSection { padding: 20px; }
         .leaderboard-title { margin-bottom: 20px; }
-        .your-rank {
-            text-align: center;
-            font-size: 1.1rem;
-            margin: 12px 0 20px;
-            padding: 12px;
-            background: #e8f0fe;
-            border-radius: 10px;
-            color: #1e3c72;
-        }
+        .your-rank { text-align: center; font-size: 1.1rem; margin: 12px 0 20px; padding: 12px; background: #e8f0fe; border-radius: 10px; color: #1e3c72; }
 
-        .filter-row {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .filter-row { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .filter-row select { padding: 12px; }
 
-        .filter-row select {
-            padding: 12px;
-        }
-
-        #leaderboardTable th, #leaderboardTable td { text-align: center; padding: 12px; }
+        #leaderboardTable th, #leaderboardTable td { text-align: center; padding: 12px; border: 1px solid #e0e0e0; }
         #leaderboardTable .top-3 { font-weight: 600; background: #fffacd; }
 
         @media (min-width: 600px) {
             .filter-row { flex-direction: row; justify-content: center; gap: 20px; }
             .filter-row select { width: auto; min-width: 180px; }
-            body { padding: 20px; }
-            .container { padding: 32px; }
         }
 
         @media (max-width: 600px) {
             #leaderboardTable thead { display: none; }
-            #leaderboardTable tr {
-                display: block;
-                margin-bottom: 16px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-            }
-            #leaderboardTable td {
-                display: block;
-                text-align: right;
-                border: none;
-                position: relative;
-                padding-left: 50%;
-            }
-            #leaderboardTable td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 12px;
-                font-weight: bold;
-                color: #2a5298;
-            }
+            #leaderboardTable tr { display: block; margin-bottom: 16px; border: 1px solid #ddd; border-radius: 8px; }
+            #leaderboardTable td { display: block; text-align: right; border: none; position: relative; padding-left: 50%; }
+            #leaderboardTable td:before { content: attr(data-label); position: absolute; left: 12px; font-weight: bold; color: #2a5298; }
         }
     </style>
 </head>
 <body>
+
+    <div id="loadingOverlay" class="loading-overlay hidden">Loading...</div>
+
     <div class="container">
 
         <!-- Login -->
@@ -219,7 +149,8 @@
                 <option value="student">Student</option>
                 <option value="teacher">Teacher</option>
             </select>
-            <button onclick="login()">Login</button>
+            <button id="loginBtn" onclick="login()">Login</button>
+            <div id="loginError" class="error-message hidden"></div>
         </div>
 
         <!-- Student Dashboard -->
@@ -349,17 +280,8 @@
     </div>
 
     <script>
-        // ────────────────────────────────────────────────
-        // GLOBAL VARIABLES
-        // ────────────────────────────────────────────────
-        let students = JSON.parse(localStorage.getItem('students')) || [
-            { username: 'test',   password: 'pass',   role: 'student' },
-            { username: 'shimba', password: '1234',   role: 'student' },
-            { username: 'john',   password: '1234',   role: 'student' },
-            { username: 'zanji',  password: '1234',   role: 'student' }
-        ];
+        const API_URL = 'https://shimba.hjsackmba.workers.dev';
 
-        let testHistory = JSON.parse(localStorage.getItem('testHistory')) || [];
         let currentQuestions = [];
         let userAnswers = {};
         let currentPage = 0;
@@ -367,36 +289,74 @@
         let timer;
         let timeLeft = 0;
         let currentUser = null;
+        let isSubmitting = false;
+
+        let testHistory = JSON.parse(localStorage.getItem('testHistory')) || [];
+
+        // ── Loading overlay ──
+        function showLoading(show = true) {
+            document.getElementById('loadingOverlay').classList.toggle('hidden', !show);
+        }
+
+        // ── Safe fetch ──
+        async function fetchWithError(url, options = {}) {
+            try {
+                showLoading(true);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal,
+                    headers: { 'Content-Type': 'application/json', ...options.headers }
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    const errText = await response.text().catch(() => '');
+                    throw new Error(`Server error ${response.status}: ${errText || response.statusText}`);
+                }
+
+                return await response.json();
+            } catch (err) {
+                console.error('Fetch error:', err);
+                let msg = 'Network error. Please check your connection.';
+                if (err.name === 'AbortError') msg = 'Request timed out.';
+                alert(msg);
+                return null;
+            } finally {
+                showLoading(false);
+            }
+        }
 
         // Live clock
         function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleString('en-ZM', {
+            document.getElementById('liveClock').textContent = now.toLocaleString('en-ZM', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                 hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
             });
-            const clockEl = document.getElementById('liveClock');
-            if (clockEl) clockEl.textContent = timeString;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        function showSection(id) {
+        async function showSection(id) {
             document.querySelectorAll('.section').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
+
             if (id === 'studentDashboard' && currentUser?.role === 'student') {
-                updateStudentDashboard();
+                await updateStudentDashboard();
             }
             if (id === 'teacherDashboard') {
-                populateTeacherDashboard();
+                await populateTeacherDashboard();
             }
             if (id === 'leaderboardSection') {
-                renderLeaderboard();
+                await renderLeaderboard();
             }
         }
 
-        function updateStudentDashboard() {
-            document.getElementById('studentName').textContent = currentUser.username;
+        async function updateStudentDashboard() {
             const myTests = testHistory.filter(t => t.student === currentUser.username);
             const totalTests = myTests.length;
             const totalCorrect = myTests.reduce((sum, t) => sum + t.score, 0);
@@ -411,35 +371,45 @@
             document.getElementById('avgScore').textContent = `${avgScore}%`;
             document.getElementById('lastTestDate').textContent = lastTest;
 
-            // Mini your rank on dashboard (all time)
-            const allLeaderboard = calculateLeaderboard('all', 'all');
-            const yourIndex = allLeaderboard.findIndex(e => e.username === currentUser.username);
-            const rankMini = document.getElementById('yourRankMini');
-            if (yourIndex !== -1 && yourIndex < 50) {
-                rankMini.innerHTML = `Your global rank: <strong>#${yourIndex + 1}</strong> (K${allLeaderboard[yourIndex].totalReward.toFixed(2)})`;
-                rankMini.style.display = 'block';
+            const allLb = await calculateLeaderboard('all', 'all');
+            const idx = allLb.findIndex(e => e.username === currentUser.username);
+            const mini = document.getElementById('yourRankMini');
+            if (idx !== -1 && idx < 50) {
+                mini.innerHTML = `Your global rank: <strong>#${idx + 1}</strong> (K${allLb[idx].totalReward.toFixed(2)})`;
+                mini.style.display = 'block';
             } else {
-                rankMini.style.display = 'none';
+                mini.style.display = 'none';
             }
         }
 
-        function login() {
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value;
-            const role = document.getElementById('role').value;
+        async function login() {
+            const btn = document.getElementById('loginBtn');
+            const errEl = document.getElementById('loginError');
+            errEl.classList.add('hidden');
+            btn.disabled = true;
 
-            if (role === 'teacher' && user === 'admin' && pass === 'admin123') {
-                currentUser = { username: 'admin', role: 'teacher' };
-                showSection('teacherDashboard');
-                return;
-            }
+            try {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const role = document.getElementById('role').value;
 
-            const student = students.find(s => s.username === user && s.password === pass);
-            if (student && role === 'student') {
-                currentUser = { ...student, role: 'student' };
-                showSection('studentDashboard');
-            } else {
-                alert("Invalid credentials or wrong role selected.");
+                if (!username || !password) throw new Error('Enter username and password');
+
+                const res = await fetchWithError(`${API_URL}/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!res || !res.success) throw new Error(res?.message || 'Login failed');
+
+                currentUser = { username, role };
+                if (role === 'student') await showSection('studentDashboard');
+                if (role === 'teacher') await showSection('teacherDashboard');
+            } catch (e) {
+                errEl.textContent = e.message || 'Login error';
+                errEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
             }
         }
 
@@ -447,13 +417,19 @@
             const subject = document.getElementById('subject').value;
             const count = parseInt(document.getElementById('questionsCount').value);
 
-            if (!subject || !count) return alert("Select subject and number of questions.");
+            if (!subject || !count) {
+                alert("Please select subject and number of questions.");
+                return;
+            }
 
             let pool = questions.filter(q => q.subject === subject);
-            pool.sort(() => Math.random() - 0.5);
-            currentQuestions = pool.slice(0, count);
+            if (pool.length === 0) {
+                alert("No questions available for this subject yet.");
+                return;
+            }
 
-            if (currentQuestions.length === 0) return alert("No questions available for this subject yet.");
+            pool.sort(() => Math.random() - 0.5);
+            currentQuestions = pool.slice(0, Math.min(count, pool.length));
 
             userAnswers = {};
             currentPage = 0;
@@ -491,7 +467,8 @@
             });
 
             document.getElementById('questionContainer').innerHTML = html;
-            document.getElementById('pageInfo').innerText = `Page ${currentPage + 1} of ${Math.ceil(currentQuestions.length / questionsPerPage)}`;
+            document.getElementById('pageInfo').textContent = `Page ${currentPage + 1} of ${Math.ceil(currentQuestions.length / questionsPerPage)}`;
+
             document.getElementById('prevBtn').classList.toggle('hidden', currentPage === 0);
             const isLast = (currentPage + 1) * questionsPerPage >= currentQuestions.length;
             document.getElementById('nextBtn').classList.toggle('hidden', isLast);
@@ -501,28 +478,35 @@
         function saveAnswer(idx, val) {
             userAnswers[idx] = val;
             updateProgressBar();
-            document.querySelectorAll(`input[name="q${idx}"]`).forEach(radio => {
-                radio.parentElement.style.background = radio.checked ? '#e8f0fe' : '';
+            document.querySelectorAll(`input[name="q${idx}"]`).forEach(r => {
+                r.parentElement.style.background = r.checked ? '#e8f0fe' : '';
             });
         }
 
         function updateProgressBar() {
             const total = currentQuestions.length;
             const answered = Object.keys(userAnswers).length;
-            const percentage = total > 0 ? (answered / total * 100) : 0;
-            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressBar').style.width = total > 0 ? (answered / total * 100) + '%' : '0%';
         }
 
-        function nextPage() { currentPage++; displayPage(); }
+        function nextPage() {
+            currentPage++;
+            displayPage();
+        }
 
-        function previousPage() { if (currentPage > 0) { currentPage--; displayPage(); } }
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                displayPage();
+            }
+        }
 
         function startTimer() {
             timer = setInterval(() => {
                 timeLeft--;
                 const m = Math.floor(timeLeft / 60);
                 const s = timeLeft % 60;
-                document.getElementById('timeLeft').innerText = `Time Left: ${m}:${s < 10 ? '0' : ''}${s}`;
+                document.getElementById('timeLeft').textContent = `Time Left: ${m}:${s < 10 ? '0' : ''}${s}`;
                 if (timeLeft <= 0) {
                     clearInterval(timer);
                     submitTest();
@@ -530,54 +514,75 @@
             }, 1000);
         }
 
-        function submitTest() {
-            clearInterval(timer);
-            let score = 0;
-            currentQuestions.forEach((q, i) => {
-                if (userAnswers[i] === q.answer) score++;
-            });
+        async function submitTest() {
+            if (isSubmitting) return;
+            isSubmitting = true;
+            document.getElementById('finishBtn').disabled = true;
 
-            const reward = score * 0.50;
-            const result = {
-                student: currentUser.username,
-                subject: currentQuestions[0].subject,
-                score,
-                total: currentQuestions.length,
-                reward,
-                date: new Date().toLocaleDateString('en-ZM')
-            };
+            try {
+                clearInterval(timer);
+                let score = 0;
+                currentQuestions.forEach((q, i) => {
+                    if (userAnswers[i] === q.answer) score++;
+                });
 
-            testHistory.push(result);
-            localStorage.setItem('testHistory', JSON.stringify(testHistory));
+                const reward = score * 0.50;
+                const result = {
+                    student: currentUser.username,
+                    subject: currentQuestions[0].subject,
+                    score,
+                    total: currentQuestions.length,
+                    reward,
+                    date: new Date().toLocaleDateString('en-ZM')
+                };
 
-            showSection('resultsSection');
+                const saveRes = await fetchWithError(`${API_URL}/save-test`, {
+                    method: 'POST',
+                    body: JSON.stringify(result)
+                });
 
-            document.getElementById('resultsDisplay').innerHTML = `
-                <p style="font-size:1.4rem; margin-bottom:15px;">
-                    You scored <strong>${score}</strong> / ${currentQuestions.length}
-                </p>
-                <p style="color:#27ae60; font-weight:bold; font-size:1.3rem;">
-                    Reward Earned: K${reward.toFixed(2)}
-                </p>
-            `;
+                if (!saveRes?.success) throw new Error('Failed to save');
 
-            let fb = '<h3 style="margin:20px 0 10px;">Feedback</h3>';
-            currentQuestions.forEach((q, i) => {
-                const correct = userAnswers[i] === q.answer;
-                fb += `<p>Q${i+1}: ${correct ? '<span style="color:#27ae60">Correct</span>' : '<span style="color:#e74c3c">Wrong</span>'} - ${q.explanation}</p>`;
-            });
-            document.getElementById('feedbackContainer').innerHTML = fb;
+                testHistory.push(result);
+                localStorage.setItem('testHistory', JSON.stringify(testHistory));
 
-            // Auto-show leaderboard after test (with delay)
-            if (currentUser.role === 'student') {
-                setTimeout(showLeaderboard, 1800);
+                showSection('resultsSection');
+                document.getElementById('resultsDisplay').innerHTML = `
+                    <p style="font-size:1.4rem; margin-bottom:15px;">
+                        You scored <strong>${score}</strong> / ${currentQuestions.length}
+                    </p>
+                    <p style="color:#27ae60; font-weight:bold; font-size:1.3rem;">
+                        Reward Earned: K${reward.toFixed(2)}
+                    </p>
+                `;
+
+                let fb = '<h3 style="margin:20px 0 10px;">Feedback</h3>';
+                currentQuestions.forEach((q, i) => {
+                    const correct = userAnswers[i] === q.answer;
+                    fb += `<p>Q${i+1}: ${correct ? '<span style="color:#27ae60">Correct</span>' : '<span style="color:#e74c3c">Wrong</span>'} - ${q.explanation || 'No explanation'}</p>`;
+                });
+                document.getElementById('feedbackContainer').innerHTML = fb;
+
+                if (currentUser.role === 'student') {
+                    setTimeout(showLeaderboard, 1800);
+                }
+            } catch (err) {
+                alert('Error saving: ' + (err.message || 'Unknown'));
+                testHistory.push(result);
+                localStorage.setItem('testHistory', JSON.stringify(testHistory));
+            } finally {
+                isSubmitting = false;
+                document.getElementById('finishBtn').disabled = false;
             }
         }
 
-        function populateTeacherDashboard() {
+        async function populateTeacherDashboard() {
             const tbody = document.getElementById('teacherTableBody');
             tbody.innerHTML = '';
-            testHistory.forEach(r => {
+
+            const history = await fetchWithError(`${API_URL}/get-history`) || testHistory;
+
+            history.forEach(r => {
                 const student = students.find(s => s.username === r.student);
                 const masked = student ? '•'.repeat(student.password.length) : '—';
                 tbody.innerHTML += `
@@ -597,7 +602,8 @@
             const u = document.getElementById('newStudentUsername').value.trim();
             const p = document.getElementById('newStudentPassword').value;
             if (!u || !p) return alert("Enter username and password");
-            if (students.some(s => s.username === u)) return alert("Username already exists");
+            if (students.some(s => s.username === u)) return alert("Username exists");
+
             students.push({ username: u, password: p, role: 'student' });
             localStorage.setItem('students', JSON.stringify(students));
             alert(`Student ${u} created!`);
@@ -608,118 +614,74 @@
             location.reload();
         }
 
-        // ── Leaderboard Logic ──────────────────────────────────────
-
+        // Leaderboard functions
         function getFilteredHistory(subjectFilter = 'all', timeFilter = 'all') {
             let filtered = testHistory;
-
-            if (subjectFilter !== 'all') {
-                filtered = filtered.filter(t => t.subject === subjectFilter);
-            }
+            if (subjectFilter !== 'all') filtered = filtered.filter(t => t.subject === subjectFilter);
 
             const now = new Date();
             if (timeFilter !== 'all') {
                 let startDate;
-                if (timeFilter === '7days') {
-                    startDate = new Date(now);
-                    startDate.setDate(now.getDate() - 7);
-                } else if (timeFilter === '30days') {
-                    startDate = new Date(now);
-                    startDate.setDate(now.getDate() - 30);
-                } else if (timeFilter === 'thisMonth') {
-                    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-                } else if (timeFilter === 'thisYear') {
-                    startDate = new Date(now.getFullYear(), 0, 1);
-                }
-
-                filtered = filtered.filter(t => {
-                    const [d, m, y] = t.date.split('/');
-                    const testDate = new Date(y, m-1, d);
-                    return testDate >= startDate;
-                });
+                if (timeFilter === '7days') startDate = new Date(now.setDate(now.getDate() - 7));
+                else if (timeFilter === '30days') startDate = new Date(now.setDate(now.getDate() - 30));
+                else if (timeFilter === 'thisMonth') startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                else if (timeFilter === 'thisYear') startDate = new Date(now.getFullYear(), 0, 1);
+                filtered = filtered.filter(t => new Date(t.date.split('/').reverse().join('-')) >= startDate);
             }
-
             return filtered;
         }
 
-        function calculateLeaderboard(subjectFilter = 'all', timeFilter = 'all') {
-            const filteredHistory = getFilteredHistory(subjectFilter, timeFilter);
-            const statsByStudent = {};
+        async function calculateLeaderboard(subjectFilter = 'all', timeFilter = 'all') {
+            const res = await fetchWithError(`${API_URL}/get-leaderboard`);
+            if (res) return res;
 
-            filteredHistory.forEach(entry => {
-                const s = entry.student;
-                if (!statsByStudent[s]) {
-                    statsByStudent[s] = {
-                        username: s,
-                        totalReward: 0,
-                        totalCorrect: 0,
-                        totalQuestions: 0,
-                        testsTaken: 0,
-                        lastTestDate: 'None'
-                    };
-                }
-
-                statsByStudent[s].totalReward += entry.reward;
-                statsByStudent[s].totalCorrect += entry.score;
-                statsByStudent[s].totalQuestions += entry.total;
-                statsByStudent[s].testsTaken++;
-                statsByStudent[s].lastTestDate = entry.date;
+            const filtered = getFilteredHistory(subjectFilter, timeFilter);
+            const stats = {};
+            filtered.forEach(e => {
+                if (!stats[e.student]) stats[e.student] = { username: e.student, totalReward: 0, totalCorrect: 0, totalQuestions: 0, testsTaken: 0, lastTestDate: 'None' };
+                stats[e.student].totalReward += e.reward;
+                stats[e.student].totalCorrect += e.score;
+                stats[e.student].totalQuestions += e.total;
+                stats[e.student].testsTaken++;
+                stats[e.student].lastTestDate = e.date;
             });
-
-            let leaderboard = Object.values(statsByStudent).map(s => ({
+            let lb = Object.values(stats).map(s => ({
                 ...s,
                 avgScore: s.totalQuestions > 0 ? Math.round((s.totalCorrect / s.totalQuestions) * 100) : 0
             }));
-
-            leaderboard.sort((a, b) => {
-                if (b.totalReward !== a.totalReward) return b.totalReward - a.totalReward;
-                if (b.avgScore !== a.avgScore) return b.avgScore - a.avgScore;
-                return b.testsTaken - a.testsTaken;
-            });
-
-            return leaderboard;
+            lb.sort((a,b) => b.totalReward - a.totalReward || b.avgScore - a.avgScore || b.testsTaken - a.testsTaken);
+            return lb;
         }
 
-        function renderLeaderboard() {
-            const subjectFilter = document.getElementById('leaderboardSubjectFilter')?.value || 'all';
-            const timeFilter = document.getElementById('leaderboardTimeFilter')?.value || 'all';
+        async function renderLeaderboard() {
+            const sf = document.getElementById('leaderboardSubjectFilter')?.value || 'all';
+            const tf = document.getElementById('leaderboardTimeFilter')?.value || 'all';
 
-            const leaderboard = calculateLeaderboard(subjectFilter, timeFilter);
+            const lb = await calculateLeaderboard(sf, tf);
             const tbody = document.getElementById('leaderboardBody');
-            if (!tbody) return;
-
             tbody.innerHTML = '';
 
-            const top10 = leaderboard.slice(0, 10);
-
-            top10.forEach((entry, index) => {
-                const row = document.createElement('tr');
-                if (index < 3) row.classList.add('top-3');
-
-                row.innerHTML = `
-                    <td data-label="Rank">${index + 1}</td>
-                    <td data-label="Username">${entry.username}</td>
-                    <td data-label="Total Reward">K${entry.totalReward.toFixed(2)}</td>
-                    <td data-label="Avg Score">${entry.avgScore}%</td>
-                    <td data-label="Tests">${entry.testsTaken}</td>
-                    <td data-label="Last Test">${entry.lastTestDate}</td>
+            const top = lb.slice(0, 10);
+            top.forEach((e, i) => {
+                const tr = document.createElement('tr');
+                if (i < 3) tr.classList.add('top-3');
+                tr.innerHTML = `
+                    <td data-label="Rank">${i+1}</td>
+                    <td data-label="Username">${e.username}</td>
+                    <td data-label="Total Reward">K${e.totalReward.toFixed(2)}</td>
+                    <td data-label="Avg Score">${e.avgScore}%</td>
+                    <td data-label="Tests">${e.testsTaken}</td>
+                    <td data-label="Last Test">${e.lastTestDate}</td>
                 `;
-                tbody.appendChild(row);
+                tbody.appendChild(tr);
             });
 
-            // Your rank with current filters
-            if (currentUser && currentUser.role === 'student') {
-                const yourIndex = leaderboard.findIndex(e => e.username === currentUser.username);
-                const rankDisplay = document.getElementById('yourRankDisplay');
-
-                if (yourIndex !== -1) {
-                    const yourEntry = leaderboard[yourIndex];
-                    rankDisplay.innerHTML = `You are <strong>#${yourIndex + 1}</strong> in this view with <strong>K${yourEntry.totalReward.toFixed(2)}</strong>`;
-                } else {
-                    rankDisplay.innerHTML = "No tests match the current filters — try changing filters or take more tests!";
-                }
-            } else {
-                document.getElementById('yourRankDisplay').innerHTML = '';
+            if (currentUser?.role === 'student') {
+                const idx = lb.findIndex(e => e.username === currentUser.username);
+                const d = document.getElementById('yourRankDisplay');
+                d.innerHTML = idx !== -1 
+                    ? `You are <strong>#${idx+1}</strong> in this view with <strong>K${lb[idx].totalReward.toFixed(2)}</strong>`
+                    : "No matching tests in current filters.";
             }
         }
 
@@ -727,10 +689,11 @@
             renderLeaderboard();
             showSection('leaderboardSection');
         }
-        
-        const questions = [
 
-{ id: 501, subject: "science", text: "Which nutrient is mainly needed for energy and is abundant in nshima?", options: ["A. Proteins", "B. Carbohydrates", "C. Vitamins", "D. Minerals"], answer: "B", explanation: "Carbohydrates (from maize meal) provide quick energy." },
+        // ── REAL QUESTIONS ARRAY ────────────────────────────────────────────────
+        const questions = [
+            // Science (50 questions)
+            { id: 501, subject: "science", text: "Which nutrient is mainly needed for energy and is abundant in nshima?", options: ["A. Proteins", "B. Carbohydrates", "C. Vitamins", "D. Minerals"], answer: "B", explanation: "Carbohydrates (from maize meal) provide quick energy." },
 { id: 502, subject: "science", text: "What is the function of the heart in the human body?", options: ["A. Filter blood", "B. Pump blood", "C. Digest food", "D. Breathe"], answer: "B", explanation: "The heart pumps oxygenated blood around the body." },
 { id: 503, subject: "science", text: "Which Zambian crop is grown for its leaves and used in relishes like chibwabwa?", options: ["A. Maize", "B. Pumpkin leaves", "C. Cassava", "D. Beans"], answer: "B", explanation: "Pumpkin leaves are common in Zambian relishes." },
 { id: 504, subject: "science", text: "What causes malaria in Zambia?", options: ["A. Dirty water", "B. Mosquito bite", "C. Bad food", "D. Cold weather"], answer: "B", explanation: "Plasmodium parasite is transmitted by female Anopheles mosquitoes." },
